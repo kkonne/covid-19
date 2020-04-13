@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.header {
+    padding:10px;
+}
+
+.jumbotron {
+    background: linear-gradient(rgba(199, 226, 255,0.7),rgba(199, 226, 255,0.9)),url(https://www.stickpng.com/assets/images/5bd08b637aaafa0575d85039.png);    
+    background-repeat: no-repeat;
+    background-position: right;
+    background-attachment: fixed;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.jumbotron img {
+    height: 30px;
+    padding-bottom: 10px;
+}
+
+.footer img {
+    height: 32px;
+}
+
+.copyright p {
+    text-align: center;
+}
+.copyright {
+    margin:10px 0 0 0 !important;
+    padding: 20px 0 5px 0;
+    background-color: rgba(0,0,0,0.15);
+}
+
+.footer-columns {
+    padding: 30px 0 30px 0;
+    border-top:1px solid black;
+}
+
+.about {
+    background: linear-gradient(rgba(255,255,255,1),rgba(255, 255, 255, 0)),url(./images/about_background.png);
+    background-position: center;
+    margin-bottom: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+
+.about img {
+    height: 100px;
+    padding: 10px 0;
+}
+.by-country .row {
+    margin: 0 20px;
+}
+
+.semi-columns {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.countries .row {
+    padding: 10px 0;
+}
+
+.countries img {
+    margin-top: -1rem;
+}
+
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 99;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.who-button {
+    margin: 40px 0 30px 0;
+}
+
+.chart {
+    margin: 2rem auto 2rem auto;
+}
+
+.searchBar {
+    width: 30%;
+    margin: 20px auto 0 auto;
+}
+
+.searchBar input {
+    border-radius: 20px;
+}
