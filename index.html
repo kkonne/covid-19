@@ -47,7 +47,7 @@
         <div class="jumbotron jumbotron-fluid">
             <div class="container text-center">
                 <h1 class="display-4">Real-time stats</h1>
-                <p class="lead">It shows current stats around the world regarding Covid-19</p>
+                <p class="lead">It shows current stats around the world regarding <b>Covid-19</b></p>
                 <hr class="my-4">
 
                 <div class="row">
@@ -88,10 +88,7 @@
 
         <br />
 
-        <div class="searchBar" id="searchBar">
-        </div>
-
-        <div class="chart" id="chartDiv" style="width: 60%;">
+        <div class="chart" id="chartDiv">
         </div>
 
         <div class="container-fluid">
@@ -243,7 +240,7 @@
                                 src="https://i.imgur.com/ca4JBpj.png" class="mr-3" alt="Mario's Instagram Profile"></a>
                         <a href="https://www.facebook.com/Dule117" target="_blank"><img
                                 src="https://i.imgur.com/3wKKCUc.png" class="mr-3" alt="Mario's Facebook Profile"></a>
-                        <a href="https://www.linkedin.com/in/mario-duspara-198195189" target="_blank"><img
+                        <a href="https://www.linkedin.com/in/mario-duspara-4500a41a1/" target="_blank"><img
                                 src="https://i.imgur.com/TcGC8pG.png" class="mr-3" alt="Mario's LinkedIn Profile"></a>
                     </div>
                     <div class="col-sm-3 text-center">
@@ -331,13 +328,14 @@
 
                 content += `<div class="col-md-2">
                                 <div class="card" id="${key.Slug} ${key.Country}">
-                                    <div class="card-body">
+                                    <div class="card-body" id="${key.CountryCode}-cardBody">
                                         <h6 class="card-subtitle mb-2 text-muted float-right">${key.CountryCode}</h6>
                                         <img src="https://www.countryflags.io/${(key.CountryCode).toLowerCase()}/shiny/64.png" alt="${key.Country}'s flag">
                                         <h5 class="card-title">${key.Country}</h5>
                                         <p class="card-text">Infected: ${key.TotalConfirmed}
                                             <br /><span style="color:red">Deaths</span>: ${key.TotalDeaths}
                                             <br/>Recovered: ${key.TotalRecovered}</p>
+                                            <button class="btn btn-link btn-sm" onclick="expandButton('${key.CountryCode}')" id="${key.CountryCode}-expand">Expand info</button>
                                     </div>
                                 </div>
                             </div>`;
@@ -416,14 +414,15 @@
                         rowCounter++;
 
                         content += `<div class="col-md-2">
-                                <div class="card" id="${key.Slug}">
-                                    <div class="card-body">
+                                <div class="card country-card" id="${key.Slug}">
+                                    <div class="card-body" id="${key.CountryCode}-cardBody">
                                         <h6 class="card-subtitle mb-2 text-muted float-right">${key.CountryCode}</h6>
                                         <img src="https://www.countryflags.io/${(key.CountryCode).toLowerCase()}/shiny/64.png" alt="${key.Country}'s flag">
                                         <h5 class="card-title">${key.Country}</h5>
                                         <p class="card-text">Infected: ${key.TotalConfirmed}
                                             <br /><span style="color:red">Deaths</span>: ${key.TotalDeaths}
                                             <br/>Recovered: ${key.TotalRecovered}</p>
+                                            <button class="btn btn-link btn-sm" onclick="expandButton('${key.CountryCode}')" id="${key.CountryCode}-expand">Expand info</button>
                                     </div>
                                 </div>
                             </div>`;
@@ -440,6 +439,27 @@
             document.getElementById('countries').innerHTML = content;
         };
 
+        let expandButton = (myCountryCode) => {
+
+            document.getElementById(`${myCountryCode}-expand`).style.display = "none";
+
+            let content = "";
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    let keys = Object.values(data.Countries);
+                    for (let key of keys) {
+                        if (key.CountryCode == myCountryCode) {
+                            content = `<p class="card-text"><span class="small"><b>In last 24h</b></span><br />Infected: ${key.NewConfirmed}
+                                <br /><span style="color:red">Deaths</span>: ${key.NewDeaths}
+                                <br />Recovered: ${key.NewRecovered}</p>`;
+                            document.getElementById(myCountryCode + '-cardBody').innerHTML += content;
+                        };
+
+                    };
+                });
+        };
+
         let createChart = (parsedData) => {
             const chartHTML = `<canvas class="text-center" id="myChart" width="100%">\n</canvas>`;
             document.getElementById('chartDiv').innerHTML = chartHTML;
@@ -451,7 +471,6 @@
                 data: {
                     labels: [`${topFiveArray[0][1]}`, `${topFiveArray[1][1]}`, `${topFiveArray[2][1]}`, `${topFiveArray[3][1]}`, `${topFiveArray[4][1]}`],
                     datasets: [{
-                        // label: 'Top 5 countries by infected',
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.6)',
                             'rgba(54, 162, 235, 0.6)',
@@ -492,8 +511,6 @@
             infectedArray.push([restOfTheWorld, 'Rest of the World']);
             return infectedArray;
         };
-
-
 
 
         window.onscroll = () => { scrollFunction() };
