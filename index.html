@@ -303,12 +303,12 @@
         }
 
         let getJumbotronData = (parsedData) => {
-            document.getElementById('total_infected').innerHTML = parsedData.Global.TotalConfirmed;
-            document.getElementById('24h_infected').innerHTML = parsedData.Global.NewConfirmed;
-            document.getElementById('total_dead').innerHTML = parsedData.Global.TotalDeaths;
-            document.getElementById('24h_dead').innerHTML = parsedData.Global.NewDeaths;
-            document.getElementById('total_recovered').innerHTML = parsedData.Global.TotalRecovered;
-            document.getElementById('24h_recovered').innerHTML = parsedData.Global.NewRecovered;
+            document.getElementById('total_infected').innerHTML = Number(parsedData.Global.TotalConfirmed).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('24h_infected').innerHTML = parsedData.Global.NewConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('total_dead').innerHTML = parsedData.Global.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('24h_dead').innerHTML = parsedData.Global.NewDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('total_recovered').innerHTML = parsedData.Global.TotalRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById('24h_recovered').innerHTML = parsedData.Global.NewRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         };
 
         let sortAlphabetically = (parsedData) => {
@@ -327,14 +327,14 @@
                 rowCounter++;
 
                 content += `<div class="col-md-2">
-                                <div class="card country-card" id="${key.Slug} ${key.Country}">
+                                <div class="card" id="${key.Slug} ${key.Country}">
                                     <div class="card-body" id="${key.CountryCode}-cardBody">
                                         <h6 class="card-subtitle mb-2 text-muted float-right">${key.CountryCode}</h6>
                                         <img src="https://www.countryflags.io/${(key.CountryCode).toLowerCase()}/shiny/64.png" alt="${key.Country}'s flag">
                                         <h5 class="card-title">${key.Country}</h5>
-                                        <p class="card-text">Infected: ${key.TotalConfirmed}
-                                            <br /><span style="color:red">Deaths</span>: ${key.TotalDeaths}
-                                            <br/>Recovered: ${key.TotalRecovered}</p>
+                                        <p class="card-text">Infected: ${key.TotalConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                            <br /><span style="color:red">Deaths</span>: ${key.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                            <br/>Recovered: ${key.TotalRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                                             <button class="btn btn-link btn-sm" onclick="expandButton('${key.CountryCode}')" id="${key.CountryCode}-expand">Expand info</button>
                                     </div>
                                 </div>
@@ -419,9 +419,9 @@
                                         <h6 class="card-subtitle mb-2 text-muted float-right">${key.CountryCode}</h6>
                                         <img src="https://www.countryflags.io/${(key.CountryCode).toLowerCase()}/shiny/64.png" alt="${key.Country}'s flag">
                                         <h5 class="card-title">${key.Country}</h5>
-                                        <p class="card-text">Infected: ${key.TotalConfirmed}
-                                            <br /><span style="color:red">Deaths</span>: ${key.TotalDeaths}
-                                            <br/>Recovered: ${key.TotalRecovered}</p>
+                                        <p class="card-text">Infected: ${key.TotalConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                            <br /><span style="color:red">Deaths</span>: ${key.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                            <br/>Recovered: ${key.TotalRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                                             <button class="btn btn-link btn-sm" onclick="expandButton('${key.CountryCode}')" id="${key.CountryCode}-expand">Expand info</button>
                                     </div>
                                 </div>
@@ -450,9 +450,9 @@
                     let keys = Object.values(data.Countries);
                     for (let key of keys) {
                         if (key.CountryCode == myCountryCode) {
-                            content = `<p class="card-text"><span class="small"><b>In last 24h</b></span><br />Infected: ${key.NewConfirmed}
-                                <br /><span style="color:red">Deaths</span>: ${key.NewDeaths}
-                                <br />Recovered: ${key.NewRecovered}</p>`;
+                            content = `<p class="card-text"><span class="small"><b>In last 24h</b></span><br />Infected: ${key.NewConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                <br /><span style="color:red">Deaths</span>: ${key.NewDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                <br />Recovered: ${key.NewRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>`;
                             document.getElementById(myCountryCode + '-cardBody').innerHTML += content;
                         };
 
@@ -523,6 +523,7 @@
         Covid-19 Stats: https://api.covid19api.com/
         Country flags: https://www.countryflags.io/
         */
+
         console.log(`Thanks for visiting our site!\nCreated by Josip Leko & Mario Duspara`);
     </script>
 
